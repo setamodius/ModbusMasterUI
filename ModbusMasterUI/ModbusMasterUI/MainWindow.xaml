@@ -1,0 +1,32 @@
+﻿<Window x:Class="ModbusMasterUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModbusMasterUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource MainBackgroundColor}"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="GeneralUI.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+           
+           
+            
+           
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid >
+        <Button Style="{DynamicResource MainButtonStyle}" Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" IsDefault="True"/>
+        <TextBlock Style="{DynamicResource TextBlockStyle}"  HorizontalAlignment="Left" Height="20" Margin="460,0,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Width="78"/>
+        <TextBox Style="{DynamicResource TextBoxStyle}" HorizontalAlignment="Left" Margin="170,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="120"/>
+        <ComboBox ItemsPanel="{DynamicResource ComboBoxItemsPanel}" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" HorizontalAlignment="Left" Height="22" Margin="543,201,0,0" VerticalAlignment="Top" Width="187">
+            <ComboBoxItem Content="ComboBoxItem"/>
+            <ComboBoxItem Content="ComboBoxItem"/>
+        </ComboBox>
+    </Grid>
+</Window>
