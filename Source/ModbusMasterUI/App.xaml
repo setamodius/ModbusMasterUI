@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ModbusMasterUI"
+             xmlns:l="clr-namespace:ModbusMasterUI.ViewModel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <l:MainViewModel x:Key="MainViewModel"/>
     </Application.Resources>
 </Application>
