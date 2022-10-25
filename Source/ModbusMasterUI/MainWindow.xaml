@@ -16,33 +16,78 @@
     </Window.Resources>
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="53*"/>
-            <RowDefinition Height="381*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ComboBox ItemsPanel="{DynamicResource ComboBoxItemsPanel}" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" HorizontalAlignment="Left" Height="22" Margin="543,148,0,0" VerticalAlignment="Top" Width="187" Grid.Row="1">
-            <ComboBoxItem Content="ComboBoxItem"/>
-            <ComboBoxItem Content="ComboBoxItem"/>
-        </ComboBox>
-        <Grid>
+        <Grid Margin="4,4,4,2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel HorizontalAlignment="Center" Margin="0,10,0,0" Orientation="Horizontal" VerticalAlignment="Top">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="10,0,0,0"/>
+            <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="5" RadiusY="4" RadiusX="4"/>
+            <Button Style="{DynamicResource MainButtonStyle}" Content="Connect" VerticalAlignment="Center" IsDefault="True" Grid.Column="4" Width="80" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" VerticalAlignment="Center">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="10.3.4.246" Margin="10,0,0,0" Width="120"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="8,10,0,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Port"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="10,0,0,0"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Margin="20,0,0,0">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Port" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="502" Width="60" Margin="10,0,0,0"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="4,10,0,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="2">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="10,0,0,0"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="2" Margin="20,0,0,0">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="1" Width="60" Margin="10,0,0,0"/>
             </StackPanel>
-            <Button Style="{DynamicResource MainButtonStyle}" Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" IsDefault="True" Grid.Column="3"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="4,2,4,4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" RadiusY="4" RadiusX="4" Grid.RowSpan="2"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Margin="10,10,0,5" Grid.RowSpan="1">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Pooling Rate" FontWeight="Bold"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="1000" Width="60" Margin="10,0,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="msec" Margin="4,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="1" Grid.RowSpan="1">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Function Code" VerticalAlignment="Center" FontWeight="Bold"/>
+                <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0">
+                    <ComboBoxItem Content="ComboBoxItem"/>
+                    <ComboBoxItem Content="ComboBoxItem"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="1">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Format" VerticalAlignment="Center" FontWeight="Bold"/>
+                <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0">
+                    <ComboBoxItem Content="ComboBoxItem"/>
+                    <ComboBoxItem Content="ComboBoxItem"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="0" Margin="10,5,0,10" Grid.RowSpan="1" Grid.Row="1">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="1" Width="60" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="20,5,0,0" Grid.RowSpan="1" Grid.Row="1">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="100" Width="60" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Margin="4,2,4,2">
+            <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
+        </Grid>
+        <Grid Grid.Row="3" Height="40" Margin="4,2,4,4">
+            <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
         </Grid>
     </Grid>
 </Window>
