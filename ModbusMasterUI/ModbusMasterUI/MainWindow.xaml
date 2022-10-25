@@ -5,28 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModbusMasterUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource MainBackgroundColor}"
+        Title="ModbusMaster UI" Height="450" Width="800" Background="{DynamicResource MainBackgroundColor}"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="GeneralUI.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-           
-           
-            
-           
-            
         </ResourceDictionary>
     </Window.Resources>
     <Grid >
-        <Button Style="{DynamicResource MainButtonStyle}" Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" IsDefault="True"/>
-        <TextBlock Style="{DynamicResource TextBlockStyle}"  HorizontalAlignment="Left" Height="20" Margin="460,0,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Width="78"/>
-        <TextBox Style="{DynamicResource TextBoxStyle}" HorizontalAlignment="Left" Margin="170,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="120"/>
-        <ComboBox ItemsPanel="{DynamicResource ComboBoxItemsPanel}" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" HorizontalAlignment="Left" Height="22" Margin="543,201,0,0" VerticalAlignment="Top" Width="187">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="53*"/>
+            <RowDefinition Height="381*"/>
+        </Grid.RowDefinitions>
+        <ComboBox ItemsPanel="{DynamicResource ComboBoxItemsPanel}" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" HorizontalAlignment="Left" Height="22" Margin="543,148,0,0" VerticalAlignment="Top" Width="187" Grid.Row="1">
             <ComboBoxItem Content="ComboBoxItem"/>
             <ComboBoxItem Content="ComboBoxItem"/>
         </ComboBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel HorizontalAlignment="Center" Margin="0,10,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="8,10,0,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Port"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="4,10,0,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="2">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Button Style="{DynamicResource MainButtonStyle}" Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" IsDefault="True" Grid.Column="3"/>
+        </Grid>
     </Grid>
 </Window>
