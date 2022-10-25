@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ModbusMasterUI", "ModbusMasterUI", "{C923885D-7953-4D2D-9387-C22F99C70533}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusMasterUI", "ModbusMasterUI\ModbusMasterUI.csproj", "{2485C5D7-C98C-498C-AFEA-DDDAC1C52566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModbusMasterUI", "Source\ModbusMasterUI\ModbusMasterUI.csproj", "{2485C5D7-C98C-498C-AFEA-DDDAC1C52566}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,7 +20,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2485C5D7-C98C-498C-AFEA-DDDAC1C52566} = {C923885D-7953-4D2D-9387-C22F99C70533}
+		{2485C5D7-C98C-498C-AFEA-DDDAC1C52566} = {95157E45-20A4-4166-B9BB-AA019B875B87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DDBDEA90-3FFF-471D-B258-25C25CCAFA74}
