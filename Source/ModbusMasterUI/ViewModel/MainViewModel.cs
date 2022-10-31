@@ -2,6 +2,7 @@
 using ModbusMasterUI.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,30 +11,28 @@ namespace ModbusMasterUI.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
-        private ModbusSlaveModel modbusSlave = new()
-        {
-            SlaveIp = "localhost",
-            SlavePort = 502,
-            DeviceId = 1
-        };
+        public MainViewModel()
+        {           
+            Slaves.Add(new ModbusModel());
+            Slaves.Add(new ModbusModel());
+            Slaves.Add(new ModbusModel());
+            Slaves[2].ModbusSlave.SlaveIp = "10.3.4.247";
+        }
+        
+        private ModbusModel selectedSlave ;
 
-        public ModbusSlaveModel ModbusSlave
+        public ModbusModel SelectedSlave
         {
-            get => modbusSlave;
-            set => SetProperty(ref modbusSlave, value);
+            get => selectedSlave;
+            set => SetProperty(ref selectedSlave, value);
         }
 
-        private ModbusPoolModel modbusPool = new()
-        {
-            PoolingRate = 1000,
-        };
+        private ObservableCollection<ModbusModel> slaves = new ObservableCollection<ModbusModel>();
 
-        public ModbusPoolModel ModbusPool
+        public ObservableCollection<ModbusModel> Slaves
         {
-            get => modbusPool;
-            set => SetProperty(ref modbusPool, value);
+            get => slaves;
+            set => SetProperty(ref slaves, value);
         }
-
-
     }
 }

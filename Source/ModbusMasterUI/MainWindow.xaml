@@ -4,89 +4,114 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModbusMasterUI"
+        xmlns:m="clr-namespace:ModbusMasterUI.Model"
         mc:Ignorable="d"
-        Title="ModbusMaster UI" Height="450" Width="800" Background="{DynamicResource MainBackgroundColor}"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+        Title="ModbusMaster UI" Height="450" Width="800" Background="{DynamicResource MainBackgroundColor}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="GeneralUI.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="SlaleItemTemplate">
+                <Border VerticalAlignment="Stretch" CornerRadius="4,4,0,0" Background="#FFFFA400" Margin="0,0,4,0">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" Margin="4,0,4,0">
+                            <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlaveIp}"/>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort}" Margin="4,0,0,0"/>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, StringFormat=(\{0\})}" Margin="4,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            <DataTemplate x:Key="templateForTheContent" DataType="{x:Type m:ModbusSlaveModel}">
+                <Grid Grid.Row="1"  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="2,0,2,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="5" RadiusY="4" RadiusX="4"/>
+                        <Button Style="{DynamicResource MainButtonStyle}" Content="Connect" VerticalAlignment="Center" IsDefault="True" Grid.Column="4" Width="80" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,10" VerticalAlignment="Center">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Margin="10,0,0,0" Width="120" Text="{Binding ModbusSlave.SlaveIp}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Margin="20,0,0,0">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Port" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort, Source={StaticResource MainViewModel}}" Width="60" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="2" Margin="20,0,0,0">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, Source={StaticResource MainViewModel}}" Width="60" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="2,2,2,2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" RadiusY="4" RadiusX="4" Grid.RowSpan="2"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Margin="10,10,0,5" Grid.RowSpan="1">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Pooling Rate" FontWeight="Bold"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.PoolingRate, Source={StaticResource MainViewModel}}"/>
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="msec" Margin="4,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="1" Grid.RowSpan="1">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Function Code" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0" ItemsSource="{Binding ModbusPool.ModbusFunctions, Source={StaticResource MainViewModel}}" SelectedItem="{Binding ModbusPool.SelectedFunction, Source={StaticResource MainViewModel}}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="1">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Format" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0">
+                                <ComboBoxItem Content="ComboBoxItem"/>
+                                <ComboBoxItem Content="ComboBoxItem"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="0" Margin="10,5,0,10" Grid.RowSpan="1" Grid.Row="1">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.StartAddress, Source={StaticResource MainViewModel}}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="20,5,0,0" Grid.RowSpan="1" Grid.Row="1">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.AddressLength, Source={StaticResource MainViewModel}}"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="2,2,2,2">
+                        <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1"/>
+                    </Grid>
+                    <Grid Grid.Row="3" Height="40" Margin="2,2,2,2">
+                        <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="templateForTheHeader" DataType="{x:Type m:ModbusSlaveModel}">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" Margin="4,0,4,0">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlaveIp}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort}" Margin="4,0,0,0"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, StringFormat=(\{0\})}" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+                
+            </DataTemplate> 
         </ResourceDictionary>
     </Window.Resources>
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Margin="4,4,4,2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="5" RadiusY="4" RadiusX="4"/>
-            <Button Style="{DynamicResource MainButtonStyle}" Content="Connect" VerticalAlignment="Center" IsDefault="True" Grid.Column="4" Width="80" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" VerticalAlignment="Center">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip" VerticalAlignment="Center" FontWeight="Bold"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Margin="10,0,0,0" Width="120" Text="{Binding ModbusSlave.SlaveIp, Source={StaticResource MainViewModel}}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Margin="20,0,0,0">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Port" VerticalAlignment="Center" FontWeight="Bold"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort, Source={StaticResource MainViewModel}}" Width="60" Margin="10,0,0,0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="2" Margin="20,0,0,0">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID" VerticalAlignment="Center" FontWeight="Bold"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, Source={StaticResource MainViewModel}}" Width="60" Margin="10,0,0,0"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1" Margin="4,2,4,4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" RadiusY="4" RadiusX="4" Grid.RowSpan="2"/>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Margin="10,10,0,5" Grid.RowSpan="1">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Pooling Rate" FontWeight="Bold"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.PoolingRate, Source={StaticResource MainViewModel}}"/>
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="msec" Margin="4,0,0,0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="1" Grid.RowSpan="1">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Function Code" VerticalAlignment="Center" FontWeight="Bold"/>
-                <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0" ItemsSource="{Binding ModbusPool.ModbusFunctions, Source={StaticResource MainViewModel}}" SelectedItem="{Binding ModbusPool.SelectedFunction, Source={StaticResource MainViewModel}}"/>
-
-
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="1">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Format" VerticalAlignment="Center" FontWeight="Bold"/>
-                <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0">
-                    <ComboBoxItem Content="ComboBoxItem"/>
-                    <ComboBoxItem Content="ComboBoxItem"/>
-                </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="0" Margin="10,5,0,10" Grid.RowSpan="1" Grid.Row="1">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.StartAddress, Source={StaticResource MainViewModel}}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="20,5,0,0" Grid.RowSpan="1" Grid.Row="1">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.AddressLength, Source={StaticResource MainViewModel}}"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="2" Margin="4,2,4,2">
-            <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
-        </Grid>
-        <Grid Grid.Row="3" Height="40" Margin="4,2,4,4">
-            <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
-        </Grid>
+    <Grid>
+        <TabControl ItemContainerStyle="{DynamicResource TabControlItemContainerStyle}" Grid.RowSpan="2" ItemsSource="{Binding Slaves, Source={StaticResource MainViewModel}}" ContentTemplate="{StaticResource templateForTheContent}"
+            ItemTemplate="{StaticResource templateForTheHeader}" Background="{x:Null}" BorderBrush="{x:Null}"/>
     </Grid>
 </Window>
