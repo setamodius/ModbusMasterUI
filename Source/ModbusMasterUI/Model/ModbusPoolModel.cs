@@ -1,46 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+using ModbusMasterUI.Protocol;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModbusMasterUI.Model
 {
     public class ModbusPoolModel : ObservableObject
     {
-        
-        private int poolingRate;
-
-        public int PoolingRate
+        public ModbusPoolModel()
         {
-            get => poolingRate;
-            set => SetProperty(ref poolingRate, value);
-        }        
-
-        private List<string> modbusFunctions = new()
-        {
-            "01: Coil Status",
-            "02: Input Status",
-            "03: Holding Registers",
-            "04: Input Registers"
-        };
-
-        public List<string> ModbusFunctions
-        {
-            get => modbusFunctions;
-            set => SetProperty(ref modbusFunctions, value);
+            StartAddress = 1;
+            AddressLength = 10;
         }
 
-        private string selectedFunction = "";
-
-        public string SelectedFunction
-        {
-            get => selectedFunction;
-            set => SetProperty(ref selectedFunction, value);
-        }
-
-        private ushort startAddress;
+        private ushort startAddress = 1;
 
         public ushort StartAddress
         {
@@ -48,7 +20,7 @@ namespace ModbusMasterUI.Model
             set => SetProperty(ref startAddress, value);
         }
 
-        private ushort addressLength;
+        private ushort addressLength = 20;
 
         public ushort AddressLength
         {

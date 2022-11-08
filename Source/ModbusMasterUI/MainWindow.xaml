@@ -12,18 +12,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="GeneralUI.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate x:Key="SlaleItemTemplate">
-                <Border VerticalAlignment="Stretch" CornerRadius="4,4,0,0" Background="#FFFFA400" Margin="0,0,4,0">
-                    <Grid>
-                        <StackPanel Orientation="Horizontal" Margin="4,0,4,0">
-                            <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlaveIp}"/>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort}" Margin="4,0,0,0"/>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, StringFormat=(\{0\})}" Margin="4,0,0,0"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </DataTemplate>
-            <DataTemplate x:Key="templateForTheContent" DataType="{x:Type m:ModbusSlaveModel}">
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+            <DataTemplate x:Key="templateForTheContent" DataType="{x:Type m:ModbusTCPSlaveModel}">
                 <Grid Grid.Row="1"  >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -39,79 +30,338 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="5" RadiusY="4" RadiusX="4"/>
-                        <Button Style="{DynamicResource MainButtonStyle}" Content="Connect" VerticalAlignment="Center" IsDefault="True" Grid.Column="4" Width="80" HorizontalAlignment="Right" Margin="0,0,10,0"/>
                         <StackPanel Orientation="Horizontal" Margin="10,10,0,10" VerticalAlignment="Center">
                             <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip" VerticalAlignment="Center" FontWeight="Bold"/>
-                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Margin="10,0,0,0" Width="120" Text="{Binding ModbusSlave.SlaveIp}"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Margin="10,0,0,0" Width="120" Text="{Binding ModbusSlave.SlaveIp}" IsReadOnly="True"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Margin="20,0,0,0">
                             <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Port" VerticalAlignment="Center" FontWeight="Bold"/>
-                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort, Source={StaticResource MainViewModel}}" Width="60" Margin="10,0,0,0"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort}" Width="60" Margin="10,0,0,0" IsReadOnly="True"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="2" Margin="20,0,0,0">
                             <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID" VerticalAlignment="Center" FontWeight="Bold"/>
-                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, Source={StaticResource MainViewModel}}" Width="60" Margin="10,0,0,0"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId}" Width="60" Margin="10,0,0,0" IsReadOnly="True"/>
                         </StackPanel>
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="2,2,2,2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" RadiusY="4" RadiusX="4" Grid.RowSpan="2"/>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Margin="10,10,0,5" Grid.RowSpan="1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="4" Margin="20,0,0,0" Grid.RowSpan="1">
                             <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Pooling Rate" FontWeight="Bold"/>
-                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.PoolingRate, Source={StaticResource MainViewModel}}"/>
+                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusSlave.PoolingRate}"/>
                             <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="msec" Margin="4,0,0,0"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="1" Grid.RowSpan="1">
-                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Function Code" VerticalAlignment="Center" FontWeight="Bold"/>
-                            <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0" ItemsSource="{Binding ModbusPool.ModbusFunctions, Source={StaticResource MainViewModel}}" SelectedItem="{Binding ModbusPool.SelectedFunction, Source={StaticResource MainViewModel}}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="20,10,0,5" VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="1">
-                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Format" VerticalAlignment="Center" FontWeight="Bold"/>
-                            <ComboBox  ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}" Style="{DynamicResource ComboBoxStyle}" Width="120" Margin="10,0,0,0">
-                                <ComboBoxItem Content="ComboBoxItem"/>
-                                <ComboBoxItem Content="ComboBoxItem"/>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="0" Margin="10,5,0,10" Grid.RowSpan="1" Grid.Row="1">
-                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold"/>
-                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.StartAddress, Source={StaticResource MainViewModel}}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="20,5,0,0" Grid.RowSpan="1" Grid.Row="1">
-                            <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold"/>
-                            <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding ModbusPool.AddressLength, Source={StaticResource MainViewModel}}"/>
-                        </StackPanel>
                     </Grid>
-                    <Grid Grid.Row="2" Margin="2,2,2,2">
+                    <Grid Grid.Row="1" Margin="2,2,2,2" Grid.RowSpan="2">
                         <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1"/>
+                        <TabControl ItemContainerStyle="{DynamicResource TabControlItemContainerStyle}" BorderBrush="{x:Null}" Background="{x:Null}">
+                            <TabItem Header="Coil Status" BorderBrush="{x:Null}">
+                                <Grid Background="{DynamicResource MainBackgroundColor}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
+
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding CoilStatusPools.PoolCollection}" Grid.ColumnSpan="4" Grid.Row="1" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,10,5" >
+                                                    <Rectangle Fill="DodgerBlue" RadiusX="4" RadiusY="4"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding StartAddress, StringFormat=\{0\}:}"/>
+                                                        <TextBlock Text="{Binding AddressLength}"/>
+                                                        <Button Content="X" Grid.Column="1" Background="{x:Null}" Foreground="#FFDAD9D9" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="8" VerticalAlignment="Center" Command="{Binding DataContext.CoilStatusPools.RemovePool, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" Margin="8,0,0,0" Padding="4,2,4,2"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding CoilStatusPools.StartAddress}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding CoilStatusPools.AddressLength}"/>
+                                    </StackPanel>
+                                    <Button Style="{DynamicResource MainButtonStyle}" Content="Add Pool Range" VerticalAlignment="Center" IsDefault="True" Grid.Column="2" Width="100" HorizontalAlignment="Center" Command="{Binding CoilStatusPools.AddPool}" Margin="20,10,0,5"/>
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding CoilStatusPools.ModbusValueCollection}" Grid.ColumnSpan="4" Grid.Row="2" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,4,2" >
+                                                    <Rectangle Fill="SlateGray" RadiusX="2" RadiusY="2"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding Title}"/>                                                        
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Input Status">
+                                <Grid Background="{DynamicResource MainBackgroundColor}" Width="NaN">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
+
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding InputStatusPools.PoolCollection}" Grid.ColumnSpan="4" Grid.Row="1" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,10,5" >
+                                                    <Rectangle Fill="DodgerBlue" RadiusX="4" RadiusY="4"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding StartAddress, StringFormat=\{0\}:}"/>
+                                                        <TextBlock Text="{Binding AddressLength}"/>
+                                                        <Button Content="X" Grid.Column="1" Background="{x:Null}" Foreground="#FFDAD9D9" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="8" VerticalAlignment="Center" Command="{Binding DataContext.InputStatusPools.RemovePool, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" Margin="8,0,0,0" Padding="4,2,4,2"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding InputStatusPools.StartAddress}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding InputStatusPools.AddressLength}"/>
+                                    </StackPanel>
+                                    <Button Style="{DynamicResource MainButtonStyle}" Content="Add Pool Range" VerticalAlignment="Center" IsDefault="True" Grid.Column="2" Width="100" HorizontalAlignment="Center" Command="{Binding InputStatusPools.AddPool}" Margin="20,10,0,5"/>
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding InputStatusPools.ModbusValueCollection}" Grid.ColumnSpan="4" Grid.Row="2" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,4,2" >
+                                                    <Rectangle Fill="SlateGray" RadiusX="2" RadiusY="2"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding Title}"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Holding Register">
+                                <Grid Background="{DynamicResource MainBackgroundColor}" Width="NaN">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
+
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding HoldingRegisterPools.PoolCollection}" Grid.ColumnSpan="4" Grid.Row="1" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,10,5" >
+                                                    <Rectangle Fill="DodgerBlue" RadiusX="4" RadiusY="4"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding StartAddress, StringFormat=\{0\}:}"/>
+                                                        <TextBlock Text="{Binding AddressLength}"/>
+                                                        <Button Content="X" Grid.Column="1" Background="{x:Null}" Foreground="#FFDAD9D9" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="8" VerticalAlignment="Center" Command="{Binding DataContext.HoldingRegisterPools.RemovePool, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" Margin="8,0,0,0" Padding="4,2,4,2"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding HoldingRegisterPools.StartAddress}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding HoldingRegisterPools.AddressLength}"/>
+                                    </StackPanel>
+                                    <Button Style="{DynamicResource MainButtonStyle}" Content="Add Pool Range" VerticalAlignment="Center" IsDefault="True" Grid.Column="2" Width="100" HorizontalAlignment="Center" Command="{Binding HoldingRegisterPools.AddPool}" Margin="20,10,0,5"/>
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding HoldingRegisterPools.ModbusValueCollection}" Grid.ColumnSpan="4" Grid.Row="2" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,4,2" >
+                                                    <Rectangle Fill="SlateGray" RadiusX="2" RadiusY="2"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding Title}"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Input Register">
+                                <Grid Background="{DynamicResource MainBackgroundColor}" Width="NaN">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle Fill="#14FFFFFF" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
+
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding InputRegisterPools.PoolCollection}" Grid.ColumnSpan="4" Grid.Row="1" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,10,5" >
+                                                    <Rectangle Fill="DodgerBlue" RadiusX="4" RadiusY="4"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding StartAddress, StringFormat=\{0\}:}"/>
+                                                        <TextBlock Text="{Binding AddressLength}"/>
+                                                        <Button Content="X" Grid.Column="1" Background="{x:Null}" Foreground="#FFDAD9D9" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="8" VerticalAlignment="Center" Command="{Binding DataContext.InputRegisterPools.RemovePool, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" Margin="8,0,0,0" Padding="4,2,4,2"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Start" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding InputRegisterPools.StartAddress}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,10,0,5">
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Length" FontWeight="Bold" Margin="10,0,0,0"/>
+                                        <TextBox Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" Width="60" Margin="10,0,0,0" Text="{Binding InputRegisterPools.AddressLength}"/>
+                                    </StackPanel>
+                                    <Button Style="{DynamicResource MainButtonStyle}" Content="Add Pool Range" VerticalAlignment="Center" IsDefault="True" Grid.Column="2" Width="100" HorizontalAlignment="Center" Command="{Binding InputRegisterPools.AddPool}" Margin="20,10,0,5"/>
+                                    <ItemsControl DataContext="{Binding}" ItemsSource="{Binding InputRegisterPools.ModbusValueCollection}" Grid.ColumnSpan="4" Grid.Row="2" Margin="10,0,10,0" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,0,4,2" >
+                                                    <Rectangle Fill="SlateGray" RadiusX="2" RadiusY="2"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="6,2,6,2">
+                                                        <TextBlock Text="{Binding Title}"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+                        <Button Style="{DynamicResource MainButtonStyle}" Content="Pool" VerticalAlignment="Top" IsDefault="True" Width="80" HorizontalAlignment="Right" Command="{Binding PoolCommand}" Margin="0,2,4,0"/>
+                    </Grid>
+                    <Grid Grid.Row="2" Height="NaN" Margin="2,2,2,2" Visibility="Hidden">
+                        <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
                     </Grid>
                     <Grid Grid.Row="3" Height="40" Margin="2,2,2,2">
                         <Rectangle Fill="#14FFFFFF" RadiusY="4" RadiusX="4" Grid.RowSpan="1" Grid.Row="3"/>
                     </Grid>
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Key="templateForTheHeader" DataType="{x:Type m:ModbusSlaveModel}">
-                <Grid>
-                    <StackPanel Orientation="Horizontal" Margin="4,0,4,0">
-                        <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlaveIp}"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.SlavePort}" Margin="4,0,0,0"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding ModbusSlave.DeviceId, StringFormat=(\{0\})}" Margin="4,0,0,0"/>
-                    </StackPanel>
+            <DataTemplate x:Key="templateForTheHeader" DataType="{x:Type m:ModbusTCPSlaveModel}">
+                <Grid HorizontalAlignment="Right" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock TextWrapping="Wrap" Margin="4,0,4,0" Grid.ColumnSpan="1" Text="{Binding ModbusSlave.FullName}"/>
+                    <Button Content="X" Grid.Column="1" Background="{x:Null}" Foreground="Gray" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="8" VerticalAlignment="Center" Command="{Binding CloseCommand}" CommandParameter="{Binding}" Padding="4,2,4,2"/>
                 </Grid>
-                
-            </DataTemplate> 
+
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <TabControl ItemContainerStyle="{DynamicResource TabControlItemContainerStyle}" Grid.RowSpan="2" ItemsSource="{Binding Slaves, Source={StaticResource MainViewModel}}" ContentTemplate="{StaticResource templateForTheContent}"
+        <TabControl ItemContainerStyle="{StaticResource TabControlItemContainerStyle}" Grid.RowSpan="2" ItemsSource="{Binding Slaves, Source={StaticResource MainViewModel}}" ContentTemplate="{StaticResource templateForTheContent}"
             ItemTemplate="{StaticResource templateForTheHeader}" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,4,0" Content="+" Height="20" Width="20" FontWeight="Bold"  FontSize="10"  Style="{DynamicResource MainButtonStyle}" Command="{Binding AddDialogCommand, Mode=OneWay, Source={StaticResource MainViewModel}}"/>
+        <Grid Visibility="{Binding ShowTcpDialog, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource MainViewModel}}">
+            <Rectangle Fill="#33FFFFFF"/>
+            <Grid Width="220" Height="240">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Rectangle Fill="{DynamicResource MainBackgroundColor}" Grid.ColumnSpan="2" RadiusY="4" RadiusX="4" Grid.RowSpan="7"/>
+                <Border BorderThickness="1" Grid.ColumnSpan="2" Background="#19FFFFFF" CornerRadius="4,4,0,0" Height="50"/>
+                <Border BorderThickness="1" Grid.ColumnSpan="2" Background="#19FFFFFF" CornerRadius="0,0,4,4" Grid.Row="6" VerticalAlignment="Bottom" Height="50"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" TextWrapping="Wrap" Text="Modbus TCP Connection" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" TextWrapping="Wrap" Text="Ip" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding TcpDialogModel.SlaveIp, Source={StaticResource MainViewModel}}" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="1" Margin="0,10,10,0"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" TextWrapping="Wrap" Text="Port" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Left" Grid.Row="2" Margin="10,0,0,0"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding TcpDialogModel.SlavePort, Source={StaticResource MainViewModel}}" Grid.ColumnSpan="1" Grid.Row="2" Grid.Column="1" Margin="0,10,10,0"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" TextWrapping="Wrap" Text="Device ID" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Row="3" Margin="10,0,0,0"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding TcpDialogModel.DeviceId, Source={StaticResource MainViewModel}}" Grid.ColumnSpan="1" Grid.Row="3" Grid.Column="1" Margin="0,10,10,0"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" TextWrapping="Wrap" Text="Pooling Rate" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Row="4" Margin="10,0,0,0"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Text="{Binding TcpDialogModel.PoolingRate, Source={StaticResource MainViewModel}}" Grid.ColumnSpan="1" Grid.Row="4" Grid.Column="1" Margin="0,10,10,0"/>
+                <Button Style="{StaticResource MainButtonStyle}" Content="Add" VerticalAlignment="Center" IsDefault="True" Width="80" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Command="{Binding AddSlaveCommand, Mode=OneWay, Source={StaticResource MainViewModel}}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
